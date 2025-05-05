@@ -1,0 +1,23 @@
+[gd_scene load_steps=2 format=3 uid="uid://2u67vo7p2dkb"]
+
+[ext_resource type="Script" uid="uid://dnb0bm3xbpuxu" path="res://title.gd" id="1_y7k74"]
+
+[node name="Title" type="Node2D"]
+script = ExtResource("1_y7k74")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+offset_right = 229.0
+offset_bottom = 130.0
+
+[node name="StartButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Play"
+
+[node name="ResetButton" type="Button" parent="CanvasLayer/VBoxContainer"]
+layout_mode = 2
+text = "Reset Highscore"
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/StartButton" to="." method="_on_StartButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/ResetButton" to="." method="_on_ResetButton_pressed"]

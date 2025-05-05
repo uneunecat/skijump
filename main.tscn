@@ -1,0 +1,209 @@
+[gd_scene load_steps=17 format=3 uid="uid://dostxqx58nu67"]
+
+[ext_resource type="Script" uid="uid://ckqovsb5dtb34" path="res://player.gd" id="1_ig7tw"]
+[ext_resource type="Script" uid="uid://dnp4kwds1uk5m" path="res://main.gd" id="1_lquwl"]
+[ext_resource type="Script" uid="uid://3qek00g35ej1" path="res://jump_zone.gd" id="2_0xm2m"]
+[ext_resource type="Script" uid="uid://b45hlpmhmnqax" path="res://wind_zone.gd" id="3_1bvp3"]
+[ext_resource type="Script" uid="uid://dadeairvkcxqs" path="res://landing_zone.gd" id="4_lquwl"]
+[ext_resource type="Texture2D" uid="uid://dtbcf7t1c7tda" path="res://assets/arrow.png" id="6_7mycd"]
+[ext_resource type="PackedScene" uid="uid://b53tlxbr1wluk" path="res://virtual_joystick.tscn" id="7_5vw27"]
+[ext_resource type="Texture2D" uid="uid://bmiqfenl5lg3n" path="res://assets/sonw.png" id="7_272bh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0xm2m"]
+size = Vector2(15, 5)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_h2yge"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_ig7tw"]
+friction = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ig7tw"]
+size = Vector2(431.202, 10)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h2yge"]
+size = Vector2(100, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7mycd"]
+size = Vector2(902.75, 299)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_272bh"]
+size = Vector2(890.625, 50)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lquwl"]
+size = Vector2(1500, 20)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_lquwl")
+
+[node name="Player" type="CharacterBody2D" parent="."]
+floor_stop_on_slope = false
+floor_snap_length = 20.0
+script = ExtResource("1_ig7tw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2(44, 319)
+shape = SubResource("RectangleShape2D_0xm2m")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player"]
+position = Vector2(44, 319)
+scale = Vector2(30, 10)
+texture = SubResource("CanvasTexture_h2yge")
+
+[node name="Slope" type="StaticBody2D" parent="."]
+rotation = 0.436332
+physics_material_override = SubResource("PhysicsMaterial_ig7tw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Slope"]
+position = Vector2(349.782, 289.248)
+shape = SubResource("RectangleShape2D_ig7tw")
+
+[node name="ColorRect" type="ColorRect" parent="Slope"]
+offset_left = 135.08
+offset_top = 285.11
+offset_right = 566.08
+offset_bottom = 295.11
+
+[node name="JumpZone" type="Area2D" parent="."]
+rotation = 0.436332
+script = ExtResource("2_0xm2m")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JumpZone"]
+position = Vector2(514.27, 269.953)
+shape = SubResource("RectangleShape2D_h2yge")
+
+[node name="WindZone" type="Area2D" parent="."]
+script = ExtResource("3_1bvp3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WindZone"]
+position = Vector2(865.375, 493.5)
+shape = SubResource("RectangleShape2D_7mycd")
+
+[node name="LandingZone" type="Area2D" parent="."]
+script = ExtResource("4_lquwl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LandingZone"]
+position = Vector2(862, 669)
+shape = SubResource("RectangleShape2D_272bh")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Score: 0"
+
+[node name="HighScoreLabel" type="Label" parent="CanvasLayer"]
+offset_left = 104.0
+offset_right = 205.0
+offset_bottom = 23.0
+text = "High Score: 0"
+
+[node name="GameOverUI" type="Control" parent="CanvasLayer"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="CanvasLayer/GameOverUI"]
+layout_mode = 0
+offset_left = 521.0
+offset_top = 64.0
+offset_right = 807.0
+offset_bottom = 133.0
+theme_override_font_sizes/font_size = 50
+text = "GAME OVER"
+
+[node name="RetryButton" type="Button" parent="CanvasLayer/GameOverUI"]
+layout_mode = 0
+offset_left = 639.0
+offset_top = 159.0
+offset_right = 706.0
+offset_bottom = 200.0
+text = "Retry"
+
+[node name="TitleButton" type="Button" parent="CanvasLayer/GameOverUI"]
+layout_mode = 0
+offset_left = 728.0
+offset_top = 158.0
+offset_right = 801.0
+offset_bottom = 199.0
+text = "Title"
+
+[node name="WindLabel" type="Label" parent="CanvasLayer"]
+offset_left = 1140.0
+offset_top = 5.0
+offset_right = 1218.0
+offset_bottom = 28.0
+text = "Wind: → 0"
+
+[node name="WindIcon" type="Sprite2D" parent="CanvasLayer"]
+position = Vector2(672, 277)
+scale = Vector2(0.0693359, 0.0667324)
+texture = ExtResource("6_7mycd")
+
+[node name="GoodLabel" type="Label" parent="CanvasLayer"]
+visible = false
+offset_left = 620.0
+offset_top = 152.0
+offset_right = 723.0
+offset_bottom = 207.0
+theme_override_colors/font_color = Color(0.917647, 0.313726, 0.313726, 1)
+theme_override_font_sizes/font_size = 40
+text = "Good"
+
+[node name="StartButton" type="Button" parent="CanvasLayer"]
+offset_left = 626.0
+offset_top = 157.0
+offset_right = 713.0
+offset_bottom = 199.0
+text = "Start"
+
+[node name="LandingStateLabel" type="Label" parent="CanvasLayer"]
+visible = false
+offset_left = 600.0
+offset_top = 331.0
+offset_right = 746.0
+offset_bottom = 386.0
+theme_override_font_sizes/font_size = 40
+
+[node name="VirtualJoystick" parent="CanvasLayer" instance=ExtResource("7_5vw27")]
+
+[node name="Ground" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ground"]
+position = Vector2(682.5, 718)
+shape = SubResource("RectangleShape2D_lquwl")
+
+[node name="ColorRect" type="ColorRect" parent="Ground"]
+offset_left = -67.0
+offset_top = 707.0
+offset_right = 1433.0
+offset_bottom = 727.0
+
+[node name="SnowParticles" type="CPUParticles2D" parent="."]
+position = Vector2(640, 0)
+amount = 1000
+texture = ExtResource("7_272bh")
+lifetime = 4.0
+preprocess = 5.0
+speed_scale = 0.5
+emission_shape = 3
+emission_rect_extents = Vector2(640, 10)
+direction = Vector2(0, 1)
+spread = 0.0
+gravity = Vector2(0, 300)
+initial_velocity_min = 500.0
+initial_velocity_max = 1000.0
+scale_amount_min = 0.01
+scale_amount_max = 0.01
+
+[connection signal="jump_window_closed" from="JumpZone" to="Player" method="_on_jump_window_closed"]
+[connection signal="jump_window_opened" from="JumpZone" to="Player" method="_on_jump_window_opened"]
+[connection signal="wind_ended" from="WindZone" to="Player" method="_on_wind_zone_wind_ended"]
+[connection signal="wind_started" from="WindZone" to="Player" method="_on_wind_zone_wind_started"]
+[connection signal="landing_window_closed" from="LandingZone" to="Player" method="_on_landing_zone_landing_window_closed"]
+[connection signal="landing_window_opened" from="LandingZone" to="Player" method="_on_landing_zone_landing_window_opened"]
+[connection signal="pressed" from="CanvasLayer/GameOverUI/RetryButton" to="." method="_on_RetryButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/GameOverUI/TitleButton" to="." method="_on_TitleButton_pressed"]
+[connection signal="pressed" from="CanvasLayer/StartButton" to="." method="_on_StartButton_pressed"]
