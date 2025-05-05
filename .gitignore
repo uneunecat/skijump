@@ -1,3 +1,4 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+assets/Godot_v4.4.1-stable_export_templates.tpz
